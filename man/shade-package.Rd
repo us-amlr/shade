@@ -9,7 +9,8 @@
 shade: Shiny Shadow Fixer
 }
 \details{
-R package/Shiny app for fixing VIAME CSV output files. See \href{https://github.com/Kitware/dive/issues/1415}{this bug} for more details
+R package/Shiny app for fixing VIAME CSV output files.
+See \href{https://github.com/Kitware/dive/issues/1415}{this bug} for more details.
 }
 \author{
 Sam Woodman \email{sam.woodman@noaa.gov}
