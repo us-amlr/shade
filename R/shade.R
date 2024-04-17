@@ -39,7 +39,10 @@ shade <- function(...) {
     # ),
     
     titlePanel("Shiny Shadow Fixer"),
-    tags$h5("Find parent image URL, or fix VIAME CSV output"), 
+    tags$h5("Find parent image URL, or fix VIAME CSV output.", 
+            "Package home:", 
+            tags$a(href="https://github.com/us-amlr/shade", 
+                   "https://github.com/us-amlr/shade")), 
     
     sidebarLayout(
       sidebarPanel(
@@ -56,12 +59,12 @@ shade <- function(...) {
       mainPanel(
         tabsetPanel(
           tabPanel("Parent Image Finder",
-                   tags$h5("This tab allows you generate the URL of the full shadowgraph image. ", 
+                   tags$h5("This tab allows you generate the URL of the", 
+                           "full shadowgraph image. ", 
                            "Specify the 'glider deployment' ", 
                            "and 'Directory name'in the left sidebar, ", 
-                           "and then also make selections in this tab"), 
-                   tags$h5("Specifically:", tags$br(), 
-                           "1) select if this is a raw or processed image", tags$br(), 
+                           "and then also make selections in this tab. Specifically:"), 
+                   tags$h5("1) select if this is a raw or processed image", tags$br(), 
                            "2) select the image type", tags$br(), 
                            "3) paste in the full ROI image name. ", 
                            "This name will be parsed to determine the parent image name"), 
@@ -82,7 +85,14 @@ shade <- function(...) {
                    tags$br(), tags$br()
           ), 
           tabPanel("VIAME CSV Fixer", 
-                   tags$h5("instructions todo"), 
+                   tags$h5("This tab helps you fix VIAME CSV files."),
+                   tags$h5("1) Upload a VIAME CSV", tags$br(), 
+                           "2) Enter your threshold values, and review the output ", 
+                           "table to ensure the VIAME CSV is now correct", tags$br(), 
+                           "3) Export your CSV file, and upload it to GCP"), 
+                   tags$h5(tags$a(href = "https://docs.google.com/document/d/1-FqtAjUGWBAd0wkqsXvY3q8Ks0zuT-_0EIW-N9rKebY/edit?usp=sharing", 
+                                  "See this doc"),
+                           "for further usage instructions"), 
                    fileInput("viame_csv", "VIAME CSV input", accept = csv.accept),
                    tags$h3("Threshold corrections"), 
                    column(
@@ -96,7 +106,8 @@ shade <- function(...) {
                      ), 
                      conditionalPanel(
                        condition = "input.threshold_individual == true", 
-                       tags$h5("individual todo"), 
+                       tags$h5("Select classes with individual threshold", 
+                               "values, and enter the values"), 
                        fluidRow(
                          column(6, uiOutput("threshold_classes_uiOut_select")), 
                          column(6, uiOutput("threshold_individual_widgets"))
@@ -255,6 +266,11 @@ shade <- function(...) {
       
       # Run the fixer function
       if (input$threshold_individual) {
+        validate(
+          need(all(threshold_individual_df()$threshold >= input$threshold_base), 
+               paste("All individual threshold values must be greater than", 
+                     "or equal to the Base Threshold Confidence"))
+        )
         fix_viame_csv(vcsv_csv(), input$threshold_base, threshold_individual_df())
       } else {
         fix_viame_csv(vcsv_csv(), input$threshold_base)

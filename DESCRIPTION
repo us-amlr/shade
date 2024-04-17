@@ -1,6 +1,6 @@
 Package: shade
 Title: Shiny Shadow Fixer
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
         person("Sam", "Woodman", email = "sam.woodman@noaa.gov", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6071-8186"))
 Description: What the package does (one paragraph).
