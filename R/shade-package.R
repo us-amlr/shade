@@ -11,8 +11,12 @@
 #' @import dplyr
 #' @import shiny
 #' 
+#' @importFrom DT DTOutput renderDT
 #' @importFrom rclipboard rclipboardSetup rclipButton
-#' @importFrom stringr str_glue str_remove str_replace_all str_split_1
+#' @importFrom readr cols read_csv write_csv write_lines
+#' @importFrom stringr str_glue str_pad str_remove str_replace_all str_split_1
+#' @importFrom tidyr replace_na
+#' @importFrom utils head
 #'
 #' @keywords package
 "_PACKAGE"

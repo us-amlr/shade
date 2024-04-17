@@ -9,14 +9,12 @@ shade(...)
 \arguments{
 \item{...}{passed to \code{\link[shiny]{shinyApp}}}
 }
-\value{
-todo
-}
 \description{
 Runs shade, the shiny-shadow-fixer R Shiny App
 }
 \details{
-todo
+Shiny app that allows users to generate the parent GCS URL for a shadowgraph
+region image, and fix a VIAME CSV file using user-provided thresholds
 }
 \examples{
 if (interactive()) shade()
