@@ -11,7 +11,8 @@
 #' @import dplyr
 #' @import shiny
 #' 
-#' @importFrom stringr str_glue str_replace_all str_split_1
+#' @importFrom rclipboard rclipboardSetup rclipButton
+#' @importFrom stringr str_glue str_remove str_replace_all str_split_1
 #'
 #' @keywords package
 "_PACKAGE"

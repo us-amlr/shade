@@ -41,6 +41,7 @@ shade <- function(...) {
     # ),
     
     titlePanel("Shiny Shadow Fixer"),
+    tags$h5("Find parent image URL, or fix VIAME CSV output"), 
     
     sidebarLayout(
       sidebarPanel(
@@ -68,12 +69,13 @@ shade <- function(...) {
                            "3) paste in the full ROI image name. ", 
                            "This name will be parsed to determine the parent image name"), 
                    tags$h3("Inputs"), 
-                   fluidRow(
+                   column(
+                     width = 12, 
                      radioButtons("raw_proc", "Raw or processed image?", 
                                   choices = c("raw", "proc")), 
                      uiOutput("image_type_uiOut_select"), 
-                     textInput("image_name", "Image name", 
-                               placeholder = "SG01 20220513-190538-011.jpg")
+                     textInput("image_name", "Region (ROI) image name", 
+                               placeholder = "SG01 20220513-190538-011.jpg-out0.jpg")
                    ), 
                    tags$h3("Authenticated URL"), 
                    textOutput("image_url"), 
@@ -92,6 +94,7 @@ shade <- function(...) {
     output$image_type_uiOut_select <- renderUI({
       req(input$raw_proc)
       
+      ### RenderUI for image type - depends on raw/proc selection
       choices.list <- switch(
         input$raw_proc, 
         raw  = c("images"), 
@@ -101,14 +104,22 @@ shade <- function(...) {
       selectInput("image_type", "Image type", choices = choices.list)
     })
     
-    image_name_parse <- reactive({
+    ### Reactive wrapper to generate bucket name
+    bucket_name <- reactive({
+      switch(req(input$raw_proc), 
+             raw  = "amlr-gliders-imagery-raw-dev", 
+             proc = "amlr-gliders-imagery-proc-dev")
+    })
+    
+    ### Reactive wrapper around region image parse function
+    region_image_name_parse <- reactive({
       validate(
         need(!identical(input$image_name, ""), "Please enter an image name")
       )
-      paste(head(
-        unlist(str_split_1(input$image_name, "-")), 
-        -1
-      ), collapse = "-")
+      
+      shade::region_image_name_parse(
+        input$image_name, bucket_name(), input$image_type
+      )
     })
     
     image_url_text <- reactive({
@@ -117,17 +128,11 @@ shade <- function(...) {
              "Please enter a directory name that follows the format Dir####")
       )
       
-      bucket.name <- switch(input$raw_proc, 
-                            raw  = "amlr-gliders-imagery-raw-dev", 
-                            proc = "amlr-gliders-imagery-proc-dev")
-      
-      gcs_url(bucket.name, input$glider_deployment, input$image_type, 
-              input$directory_name, image_name_parse())
+      gcs_url(bucket_name(), input$glider_deployment, input$image_type, 
+              input$directory_name, region_image_name_parse())
     })
     
-    output$image_url <- renderText({
-      image_url_text()
-    })
+    output$image_url <- renderText(image_url_text())
     
     output$clip <- renderUI({
       rclipButton(
@@ -135,9 +140,7 @@ shade <- function(...) {
         label = "Copy URL",
         clipText = image_url_text(), 
         icon = icon("clipboard"),
-        # tooltip = "Click me... I dare you!",
         placement = "top"
-        # options = list(delay = list(show = 800, hide = 100), trigger = "hover")
       )
     })
     
