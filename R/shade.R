@@ -80,8 +80,10 @@ shade <- function(...) {
                                placeholder = "SG01 20220513-190538-011.jpg-out0.jpg")
                    ), 
                    tags$h3("Authenticated URL"), 
-                   textOutput("image_url"), 
-                   uiOutput("clip"),
+                   uiOutput("user_widgets"), 
+                   # textOutput("image_url_textout"), 
+                   # uiOutput("image_url"), 
+                   # uiOutput("clip"), 
                    tags$br(), tags$br()
           ), 
           tabPanel("VIAME CSV Fixer", 
@@ -175,17 +177,36 @@ shade <- function(...) {
               input$directory_name, region_image_name_parse())
     })
     
-    output$image_url <- renderText(image_url_text())
     
-    output$clip <- renderUI({
-      rclipButton(
-        inputId = "clipbtn",
-        label = "Copy URL",
-        clipText = image_url_text(), 
-        icon = icon("clipboard"),
-        placement = "top"
+    output$user_widgets <- renderUI({
+      tagList(
+        tags$a("Click to open URL", href=image_url_text(), target="_blank"), 
+        rclipButton(
+          inputId = "clipbtn",
+          label = "Copy URL",
+          clipText = image_url_text(), 
+          icon = icon("clipboard"),
+          placement = "top"
+        ), 
+        tags$br(), 
+        renderText(image_url_text())
       )
     })
+    
+    # output$image_url_textout <- renderText(image_url_text())
+    # output$image_url <- renderUI({
+    #   tags$a("Click to open URL", href=image_url_text(), target="_blank")  
+    # })
+    # 
+    # output$clip <- renderUI({
+    #   rclipButton(
+    #     inputId = "clipbtn",
+    #     label = "Copy URL",
+    #     clipText = image_url_text(), 
+    #     icon = icon("clipboard"),
+    #     placement = "top"
+    #   )
+    # })
     
     
     #---------------------------------------------------------------------------

@@ -1,3 +1,7 @@
+# shade 0.1.2
+
+* Allow user to click to open parent URL
+
 # shade 0.1.1
 
 * Fixed bug where Shiny app allowed individual threshold values to be greater than the base
