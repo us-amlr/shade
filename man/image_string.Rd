@@ -7,7 +7,11 @@
 \usage{
 gcs_url(bucket_name, glider_deployment, image_type, directory_name, image_name)
 
-region_image_name_parse(image_name, bucket_name, image_type = "")
+region_image_name_parse(
+  image_name,
+  bucket_name,
+  image_type = c("images-ffPCG", "images-imgff", "images-orig-regions")
+)
 }
 \arguments{
 \item{bucket_name}{string; name of GCP bucket}
@@ -15,15 +19,13 @@ region_image_name_parse(image_name, bucket_name, image_type = "")
 \item{glider_deployment}{string; name of glider deployment as glider-YYYYmmdd}
 
 \item{image_type}{string; image type, aka name of intermediary path folder.
-Must be one of: 'images-ffPCG', 'images-imgff', 'jpgorig-regions'}
+Must be one of: 'images-ffPCG', 'images-imgff', 'images-orig-regions'}
 
 \item{directory_name}{string; directory name}
 
 \item{image_name}{string; name of the shadowgraph image. Note that for
 \code{region_image_name_parse()}, this must be the name of a region image (see
 Examples section)}
-
-\item{z}{string; name of GCP bucket}
 }
 \value{
 string
@@ -34,7 +36,7 @@ These functions perform different parts of image name processing:
 \item \code{gcs_url()} Glues the inputs together to generate the proper GCS
 Authenticated URL, returning this URL as a string
 \item \code{region_image_name_parse()}: Parses a region file name, and outputs a string
-with the name of the user-specificed version of the parent image
+with the name of the user-specified version of the parent image
 Generate the GCS Authenticated URL for the user-specified shadowgraph image
 }
 }

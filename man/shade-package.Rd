@@ -3,7 +3,6 @@
 \docType{package}
 \name{shade-package}
 \alias{shade-package}
-\alias{shade}
 \title{Shiny Shadow Fixer}
 \description{
 shade: Shiny Shadow Fixer

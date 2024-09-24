@@ -39,10 +39,12 @@ shade <- function(...) {
     # ),
     
     titlePanel("Shiny Shadow Fixer"),
-    tags$h5("Find parent image URL, or fix VIAME CSV output.", 
-            "Package home:", 
+    tags$h5("Find parent image URL, or fix VIAME CSV output."), 
+    tags$h5("Package version, home: ", 
+            paste0("v", packageVersion("shade"), ", "), 
             tags$a(href="https://github.com/us-amlr/shade", 
                    "https://github.com/us-amlr/shade")), 
+    
     
     sidebarLayout(
       sidebarPanel(
@@ -143,7 +145,7 @@ shade <- function(...) {
       choices.list <- switch(
         input$raw_proc, 
         raw  = c("images"), 
-        proc = c("images-ffPCG", "images-imgff", "jpgorig-regions")
+        proc = c("images-ffPCG", "images-imgff", "images-orig-regions")
       )
       
       selectInput("image_type", "Image type", choices = choices.list)

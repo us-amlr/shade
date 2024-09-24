@@ -1,5 +1,6 @@
 # shade: shiny-shadow-fixer
-R Shiny app for fixing exported VIAME predictions. 
+
+R Shiny app for both finding parent images from regions, and fixing exported VIAME predictions. 
 
 This Shiny app addresses [this bug](https://github.com/Kitware/dive/issues/1415), for the purpose of ESD's plankton image library efforts.
 

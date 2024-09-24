@@ -3,3 +3,14 @@
 ^LICENSE\.md$
 ^data-raw$
 ^app\.R$
+
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^tic\.R$
+^README\.Rmd$
+^cran-comments\.md$
+^CRAN-RELEASE$
+^\.github$
+^CRAN-SUBMISSION$
+^rsconnect$

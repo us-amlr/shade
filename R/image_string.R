@@ -5,15 +5,14 @@
 #' * `gcs_url()` Glues the inputs together to generate the proper GCS
 #' Authenticated URL, returning this URL as a string
 #' * `region_image_name_parse()`: Parses a region file name, and outputs a string
-#' with the name of the user-specificed version of the parent image
+#' with the name of the user-specified version of the parent image
 
 #' Generate the GCS Authenticated URL for the user-specified shadowgraph image
 #' 
-#' @param z string; name of GCP bucket
 #' @param bucket_name string; name of GCP bucket
 #' @param glider_deployment string; name of glider deployment as glider-YYYYmmdd
 #' @param image_type string; image type, aka name of intermediary path folder.
-#'   Must be one of: 'images-ffPCG', 'images-imgff', 'jpgorig-regions'
+#'   Must be one of: 'images-ffPCG', 'images-imgff', 'images-orig-regions'
 #' @param directory_name string; directory name
 #' @param image_name string; name of the shadowgraph image. Note that for
 #'   `region_image_name_parse()`, this must be the name of a region image (see
@@ -51,7 +50,10 @@ gcs_url <- function(bucket_name, glider_deployment, image_type,
 
 #' @rdname image_string
 #' @export
-region_image_name_parse <- function(image_name, bucket_name, image_type = "") {
+region_image_name_parse <- function(
+    image_name, bucket_name, 
+    image_type = c("images-ffPCG", "images-imgff", "images-orig-regions") 
+) {
   # Split image name by "-", and remove last item. This removes eg "-out0.jpg"
   img.name <- paste(head(
     unlist(str_split_1(image_name, "-")), 
@@ -68,7 +70,7 @@ region_image_name_parse <- function(image_name, bucket_name, image_type = "") {
       switch(image_type,
              `images-ffPCG` = "-ffPCG.png",
              `images-imgff` = "-imgff.png",
-             `jpgorig-regions` = ".jpgorig-regions.jpg")
+             `images-orig-regions` = ".jpgorig-regions.jpg")
     )
   } else {
     stop("Invalid bucket name")

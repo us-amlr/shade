@@ -1,3 +1,9 @@
+# shade 0.1.3
+
+* Use 'images-orig-regions' instead of 'jpgorig-regions', under processed images
+
+* Add package version number to the Shiny app UI
+
 # shade 0.1.2
 
 * Allow user to click to open parent URL
